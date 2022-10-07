@@ -1,40 +1,6 @@
 import { ResultsList } from "./Classes/ResultsList.js";
 import { UserResults } from "./Classes/User_Results.js";
-
-let countries: string[] = [
-  "Qatar",
-  "Ecuador",
-  "Senegal",
-  "Netherlands",
-  "Spain",
-  "Costa Rica",
-  "Germany",
-  "Japan",
-  "England",
-  "Iran",
-  "United States",
-  "Wales",
-  "Belgium",
-  "Canada",
-  "Morocco",
-  "Croatia",
-  "Argentina",
-  "Saudi Arabia",
-  "Mexico",
-  "Poland",
-  "Brazil",
-  "Serbia",
-  "Switzerland",
-  "Cameroon",
-  "France",
-  "Australia",
-  "Denmark",
-  "Tunisia",
-  "Portugal",
-  "Ghana",
-  "Uruguay",
-  "South Korea",
-];
+import { countries } from "./CountryArray.js";
 
 const form = document.querySelector("form")! as HTMLFormElement;
 const input = document.querySelector("input") as HTMLInputElement;
@@ -42,16 +8,29 @@ let randCountry: number;
 const ul = document.querySelector("ul")!;
 const list = new ResultsList(ul);
 const submitBtn = document.getElementById("generateBtn") as HTMLButtonElement;
-
 let arrEl: string[] = [];
-//! Button
-form.addEventListener("submit", (e: Event) => {
-  e.preventDefault();
+randCountry = Math.floor(Math.random() * countries.length);
+arrEl = countries.splice(randCountry, 1);
+let country = arrEl.toString();
 
-  if (countries.length >= 1) {
-    randCountry = Math.floor(Math.random() * countries.length);
-    arrEl = countries.splice(randCountry, 1);
-    let country = arrEl.toString();
+//! API CALL
+
+const flagApi = async () => {
+  // let res = await fetch("https://rickandmortyapi.com/api/character/");
+  let res = await fetch(
+    "https://cdn.jsdelivr.net/npm/country-flag-emoji-json@2.0.0/dist/by-code.json"
+  );
+  console.log(res);
+  let data = await res.json();
+  console.log(data);
+
+  Object.values(data).forEach((value: object) => {
+    console.log(value.emoji);
+  });
+};
+
+const submitHandle = (e: Event): void => {
+  if (countries.length >= 1 && input.value) {
     console.log(country, input.value);
     const user = new UserResults(input.value, country);
     form.reset();
@@ -60,4 +39,10 @@ form.addEventListener("submit", (e: Event) => {
     submitBtn.disabled = true;
     console.log("out of countries");
   }
+};
+//! Button
+form.addEventListener("submit", (e: Event) => {
+  e.preventDefault();
+  submitHandle(e);
+  flagApi();
 });

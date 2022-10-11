@@ -8,7 +8,7 @@ let randCountry: number;
 const ul = document.querySelector("ul")!;
 const list = new ResultsList(ul);
 const submitBtn = document.getElementById("generateBtn") as HTMLButtonElement;
-let arrEl: string[] = [];
+// let arrEl: string[] = [];
 randCountry = Math.floor(Math.random() * countries.length);
 
 //! API CALL
@@ -29,6 +29,7 @@ randCountry = Math.floor(Math.random() * countries.length);
 
 const submitHandle = (e: Event): void => {
   if (countries.length >= 1 && input.value) {
+    let arrEl: string[] = [];
     arrEl = countries.splice(randCountry, 1);
     let country = arrEl.toString();
     console.log(country, input.value);

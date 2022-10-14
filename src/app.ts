@@ -9,7 +9,6 @@ const ul = document.querySelector("ul")!;
 const list = new ResultsList(ul);
 const submitBtn = document.getElementById("generateBtn") as HTMLButtonElement;
 // let arrEl: string[] = [];
-randCountry = Math.floor(Math.random() * countries.length);
 
 //! API CALL
 
@@ -27,18 +26,22 @@ randCountry = Math.floor(Math.random() * countries.length);
 //   });
 // };
 
+// if (!countries.length) {
+//   submitBtn.innerText = "No more Teams to Distribute";
+// }
+
 const submitHandle = (e: Event): void => {
   if (countries.length >= 1 && input.value) {
     let arrEl: string[] = [];
+    randCountry = Math.floor(Math.random() * countries.length);
     arrEl = countries.splice(randCountry, 1);
     let country = arrEl.toString();
-    console.log(country, input.value);
-    console.log(countries);
     const user = new UserResults(input.value, country);
     form.reset();
     list.render(user);
-  }
-  if (!input.value) {
+    console.log(country, input.value);
+    console.log(countries);
+  } else if (!input.value) {
     // submitBtn.disabled = true;
     console.log("Type something");
   }

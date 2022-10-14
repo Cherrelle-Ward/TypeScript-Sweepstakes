@@ -7,19 +7,19 @@ let randCountry;
 const ul = document.querySelector("ul");
 const list = new ResultsList(ul);
 const submitBtn = document.getElementById("generateBtn");
-let arrEl = [];
-randCountry = Math.floor(Math.random() * countries.length);
 const submitHandle = (e) => {
     if (countries.length >= 1 && input.value) {
+        let arrEl = [];
+        randCountry = Math.floor(Math.random() * countries.length);
         arrEl = countries.splice(randCountry, 1);
         let country = arrEl.toString();
-        console.log(country, input.value);
-        console.log(countries);
         const user = new UserResults(input.value, country);
         form.reset();
         list.render(user);
+        console.log(country, input.value);
+        console.log(countries);
     }
-    if (!input.value) {
+    else if (!input.value) {
         console.log("Type something");
     }
 };
